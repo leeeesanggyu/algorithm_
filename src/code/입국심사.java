@@ -4,10 +4,10 @@ import java.util.Arrays;
 
 public class 입국심사 {
     public static void main(String[] args) throws Exception {
-        System.out.println(solution(6, new int[]{3, 3, 3, 3}));
+        System.out.println(solution(6, new int[]{7, 10}));
     }
 
-    public static Long solution(int n, int[] times) {
+    public static long solution(int n, int[] times) {
         long answer = 0;
 
         Arrays.sort(times);
