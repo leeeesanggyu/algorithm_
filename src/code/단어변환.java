@@ -18,17 +18,17 @@ public class 단어변환 {
         }
     }
 
-    private static boolean isNext(String cur, String n) {
-        System.out.println("cur : " + cur + " n : " + n);
-        int cnt = 0;
-        for (int i=0; i<n.length(); i++) {
-            if (cur.charAt(i) != n.charAt(i)) {
-                if (++cnt > 1) return false;
-            }
+    private static boolean checkString(String a, String b) {
+        int temp = 0;
+
+        for(int i=0; i<a.length(); i++) {
+            if(a.charAt(i) != b.charAt(i))
+                temp++;
         }
 
-        return true;
+        return (temp == 1)?true :false;
     }
+
     //solution("hit", "cog", new String[]{"hot", "dot", "dog", "lot", "log", "cog"})
     private static int solution(String begin, String target, String[] words) {
         int n = words.length, ans = 0;
@@ -45,7 +45,7 @@ public class 단어변환 {
             }
 
             for (int i=0; i<n; i++) {
-                if (!visit[i] && isNext(cur.next, words[i])) {
+                if (!visit[i] && checkString(cur.next, words[i])) {
                     visit[i] = true;
                     q.add(new Node(words[i], cur.count + 1));
                 }
@@ -55,5 +55,3 @@ public class 단어변환 {
 
     }
 }
-// for (int i=0; i<n; i++)
-//  if (words[i] != target && i == n-1) return 0;
