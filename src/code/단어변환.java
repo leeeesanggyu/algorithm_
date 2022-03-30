@@ -9,10 +9,10 @@ public class 단어변환 {
     }
 
     private static class Node {
-        String next;
-        int count;
+        private String next;
+        private Integer count;
 
-        public Node(String next, int count) {
+        private Node(String next, Integer count) {
             this.next = next;
             this.count = count;
         }
@@ -31,27 +31,27 @@ public class 단어변환 {
 
     //solution("hit", "cog", new String[]{"hot", "dot", "dog", "lot", "log", "cog"})
     private static int solution(String begin, String target, String[] words) {
-        int n = words.length, ans = 0;
-        boolean[] visit = new boolean[n];
+        int answer = 0;
+        boolean[] visited = new boolean[words.length];
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(new Node(begin, 0));
 
-        Queue<Node> q = new LinkedList<>();
-        q.add(new Node(begin, 0));
+        while(!queue.isEmpty()) {
+            Node node = queue.poll();
 
-        while(!q.isEmpty()) {
-            Node cur = q.poll();
-            if (cur.next.equals(target)) {  // 정답 도출
-                ans = cur.count;
+            if(node.next.equals(target)) {  // 정답도출
+                answer = node.count;
                 break;
             }
 
-            for (int i=0; i<n; i++) {
-                if (!visit[i] && checkString(cur.next, words[i])) {
-                    visit[i] = true;
-                    q.add(new Node(words[i], cur.count + 1));
+            for(int i=0; i<words.length; i++) {
+                if(checkString(node.next, words[i]) && !visited[i]) {
+                    visited[i] = true;
+                    queue.add(new Node(words[i], node.count + 1));
                 }
             }
-        }
-        return ans;
 
+        }
+        return answer;
     }
 }
