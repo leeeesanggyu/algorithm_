@@ -1,47 +1,59 @@
 package code;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class kakao_문자열압축 {
     public static void main(String[] args) throws Exception {
-        System.out.println(solution("abcabcabcabcdededededede"));
+        System.out.println("답 :" + solution("ababcdcdababcdcd"));
     }
 
-    // 15 / 2 == 7
-    // abcabc abcabc dedede dedede
     private static Integer solution(String s) {
-        int answer = s.length();
+        // aabbaccc
+        // 2a 2b a 3c : 7
+        int min = Integer.MAX_VALUE;
 
-        for (int i = 1; i < s.length() / 2 + 1; i++) {
-            String prev = s.substring(0, i);
-            int count = 1;
-            String enc = "";
-            String last = "";
-            for (int j = i; j < s.length(); j += i) {
-                if (j + i > s.length()) {
-                    last = s.substring(j);
-                    continue;
+        //standard 갯수 반복문
+        for (int i=1; i<=s.length() / 2 + 1; i++) {
+            int cnt = 1;
+            StringBuilder sb = new StringBuilder();
+
+            //비교대상 반복문
+            String standard = s.substring(0, i);
+            for (int j=i; j<s.length(); j+=i) {
+
+                if (j+i > s.length()) {
+                    standard = "";
+                    sb.append(s, j-i, s.length());
+                    break;
                 }
-                if (prev.equals(s.substring(j, j + i))) {
-                    count++;
-                } else {
-                    enc += prev;
-                    if (count != 1) {
-                        enc = count + enc;
+
+                String temp = s.substring(j, j+i);
+
+                if (standard.equals(temp)) {
+                    cnt++;
+                }
+                else {
+                    if(cnt != 1) {
+                        sb.append(cnt);
                     }
-                    prev = s.substring(j, j + i);
-                    count = 1;
+                    cnt = 1;
+                    sb.append(standard);
+                    standard = s.substring(j, j+i);
                 }
-            }
-            enc += prev + last;
-            if (count != 1) {
-                enc = count + enc;
+
             }
 
-            answer = Math.min(answer, enc.length());
+            if(cnt != 1) {
+                sb.append(cnt);
+            }
+            sb.append(standard);
+
+            min = (sb.length() < min) ? sb.length() : min;
         }
 
-        return answer;
+        return min;
     }
+
 }
