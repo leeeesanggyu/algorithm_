@@ -12,48 +12,38 @@ public class kakao_문자열압축 {
     private static Integer solution(String s) {
         // aabbaccc
         // 2a 2b a 3c : 7
-        int min = Integer.MAX_VALUE;
+        int answer = s.length();
 
-        //standard 갯수 반복문
-        for (int i=1; i<=s.length() / 2 + 1; i++) {
-            int cnt = 1;
-            StringBuilder sb = new StringBuilder();
-
-            //비교대상 반복문
-            String standard = s.substring(0, i);
-            for (int j=i; j<s.length(); j+=i) {
-
-                if (j+i > s.length()) {
-                    standard = "";
-                    sb.append(s, j-i, s.length());
-                    break;
+        for (int i = 1; i < s.length() / 2 + 1; i++) {
+            String prev = s.substring(0, i);
+            int count = 1;
+            String enc = "";
+            String last = "";
+            for (int j = i; j < s.length(); j += i) {
+                if (j + i > s.length()) {
+                    last = s.substring(j);
+                    continue;
                 }
-
-                String temp = s.substring(j, j+i);
-
-                if (standard.equals(temp)) {
-                    cnt++;
-                }
-                else {
-                    if(cnt != 1) {
-                        sb.append(cnt);
+                if (prev.equals(s.substring(j, j + i))) {
+                    count++;
+                } else {
+                    enc += prev;
+                    if (count != 1) {
+                        enc = count + enc;
                     }
-                    cnt = 1;
-                    sb.append(standard);
-                    standard = s.substring(j, j+i);
+                    prev = s.substring(j, j + i);
+                    count = 1;
                 }
-
+            }
+            enc += prev + last;
+            if (count != 1) {
+                enc = count + enc;
             }
 
-            if(cnt != 1) {
-                sb.append(cnt);
-            }
-            sb.append(standard);
-
-            min = (sb.length() < min) ? sb.length() : min;
+            answer = Math.min(answer, enc.length());
         }
 
-        return min;
+        return answer;
     }
 
 }
