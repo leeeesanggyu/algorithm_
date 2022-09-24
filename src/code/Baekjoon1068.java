@@ -37,20 +37,16 @@ public class Baekjoon1068 {
         }
         System.out.println(Arrays.toString(graph));
 
+        // 그래프 지울 노드를 삭제합니다.
         deleteNode = Integer.parseInt(br.readLine());
-        solution();
-    }
-
-    public static void solution() {
         for (int i=0; i<N; i++) {
-            graph[i].removeIf(el -> el == deleteNode);   // 그래프 지울 노드를 삭제합니다.
+            graph[i].removeIf(el -> el == deleteNode);
         }
-//        System.out.println(Arrays.toString(graph));
+        System.out.println(Arrays.toString(graph));
 
         if (deleteNode != root) {
             DFS(root, -1);      // 루트를 지운다면 탐색할 필요가 없습니다.
         }
-
         System.out.println(leaf[root]);
     }
 
@@ -60,9 +56,9 @@ public class Baekjoon1068 {
         }
 
         for (int y: graph[x]) {
-//            if (y == parent) {
-//                continue;   // 위에서 내려왔으니 부모는 볼 필요가 없습니다.
-//            }
+            if (y == parent) {
+                continue;   // 위에서 내려왔으니 부모는 볼 필요가 없습니다.
+            }
             DFS(y, x);
             leaf[x] += leaf[y];
 //            System.out.println("leaf[x] : " + leaf[x]);
