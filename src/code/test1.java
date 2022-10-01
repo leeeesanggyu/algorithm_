@@ -2,8 +2,8 @@ package code;
 
 public class test1 {
     public static void main(String[] args) throws Exception {
-        String a = "AxA";
-        String b = "AyA";
+        String a = "abcde";
+        String b = "bcdej";
 
         int len = Math.min(a.length(), b.length());
 

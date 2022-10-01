@@ -1,69 +1,43 @@
 package code;
 
-import java.util.*;
+import java.util.Stack;
 
+/**
+ * 두 그룹으로 나눴을 때 합의 차가 제일 적은 결과
+ */
 public class test2 {
-    static List<List<Integer>> combination = new ArrayList<>();
+    static int[] arr = {1, 2, 3, 5};
+    static int lhs = 0;
+    static int rhs = 0;
+    static int answer = Integer.MAX_VALUE;
 
-    public static void main(String[] args) throws Exception {
-        int[] arr = {-1, -2, 1, 2}; //조합을 만들 배열
+    static Stack<Integer> lhsStack = new Stack<Integer>();
+    static Stack<Integer> rhsStack = new Stack<Integer>();
 
-        for (int i=0; i<arr.length; i++) {
-            combination.add(new ArrayList<>());
-        }
-
-        boolean[] visited = new boolean[arr.length];
-
-        for(int r = 1; r <= arr.length ; r++) {
-            comb(arr, visited, 0, r);
-        }
-
-        int answer = 0;
-        int total = 0;
-        for(int el: arr) {
-            total += el;
-        }
-
-        for (int i=arr.length; i<combination.size(); i++) {
-            System.out.println(combination.get(i));
-//            int temp = 0;
-//            for (int el : combination.get(i)) {
-//                 temp += el;
-//            }
-        }
-        final int i = (combination.size() + arr.length) / 2;
-        final List<Integer> combiMid = combination.get(i);
-        System.out.println("combi Mid : " + combiMid);
-
-        int aa = 0;
-//        for (int el: arr) {
-//            if (el)
-//        }
+    public static void main (String[] args) {
+        dfs(0);
+        System.out.println(answer);
     }
 
-    static void comb(int[] arr, boolean[] visited, int depth, int r) {
-        if(r == 0) {
-            save(arr, visited);
+    static void dfs (int idx) {
+        if(idx == arr.length) {
+            int gap = rhs - lhs;
+            if(lhs > rhs)
+                gap = lhs - rhs;
+
+            if(answer > gap)
+                answer = gap;
+
             return;
         }
-        if(depth == arr.length) {
-            return;
-        } else {
-            visited[depth] = true;
-            comb(arr, visited, depth + 1, r - 1);
 
-            visited[depth] = false;
-            comb(arr, visited, depth + 1, r);
-        }
-    }
+        lhs += arr[idx];
+        dfs(idx + 1);
 
-    static void save(int[] arr, boolean[] visited) {
-        final ArrayList<Integer> temp = new ArrayList<>();
-        for(int i = 0; i < arr.length; i++) {
-            if(visited[i] == true) {
-                temp.add(arr[i]);
-            }
-        }
-        combination.add(temp);
+        lhs -= arr[idx];
+        rhs += arr[idx];
+
+        dfs(idx + 1);
+        rhs -= arr[idx];
     }
 }
