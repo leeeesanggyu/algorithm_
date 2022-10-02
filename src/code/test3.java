@@ -30,14 +30,14 @@ public class test3 {
             }
         }
         if(xWall) {
-            dfs(x+1, y, score);
+            execute(x+1, y, score);
         }
         if(yWall) {
-            dfs(x, y+1, score);
+            execute(x, y+1, score);
         }
     }
 
-    static void dfs(int x, int y, int score) {
+    static void execute(int x, int y, int score) {
         final int currentScore = board[x][y];
         if (currentScore == 0) {
             quest(x, y, score * -1);
