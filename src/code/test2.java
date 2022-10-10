@@ -32,12 +32,18 @@ public class test2 {
         }
 
         lhs += arr[idx];
-        dfs(idx + 1);
-
+//        lhsStack.push(arr[idx]);
+//        System.out.println(lhsStack + " // " + rhsStack + ", index : " + idx);
+        dfs(idx+1);
         lhs -= arr[idx];
-        rhs += arr[idx];
+//        lhsStack.pop();
+//        System.out.println(lhsStack + " // " + rhsStack + ", index : " + idx);
 
-        dfs(idx + 1);
+
+        rhs += arr[idx];
+//        rhsStack.push(arr[idx]);
+//        System.out.println(lhsStack + " // " + rhsStack + ", index : " + idx);
+        dfs(idx+1);
         rhs -= arr[idx];
     }
 }
