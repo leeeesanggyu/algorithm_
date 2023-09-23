@@ -41,6 +41,7 @@ public class 미로탈출 {
         // 큐(Queue) 구현을 위해 queue 라이브러리 사용
         Queue<Node> q = new LinkedList<>();
         q.offer(new Node(x, y));
+
         // 큐가 빌 때까지 반복하기
         while(!q.isEmpty()) {
             Node node = q.poll();
