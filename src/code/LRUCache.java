@@ -16,6 +16,7 @@ public class LRUCache {
         for (int i = 0; i < 3; i++) {
             save(String.valueOf(i), "old value " + i);
         }
+        log();
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         while (true) {
