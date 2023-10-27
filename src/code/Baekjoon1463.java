@@ -10,32 +10,38 @@ import java.io.InputStreamReader;
  */
 public class Baekjoon1463 {
 
-    static Integer[] dp;
+    static int[] dp;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int N = 10;
-        dp = new Integer[N + 1];
-        dp[0] = 0;
-        dp[1] = 0;
+//        int N = 3;
+        int N = Integer.parseInt(br.readLine());
+        dp = new int[N + 1];
+//        dp[0] = 0;
+//        dp[1] = 0;
 
         int result = calculate(N);
         System.out.println(result);
     }
 
-    private static int calculate(int num) {
-        if (dp[num] == null) {
-            if (num % 6 == 0) {
-                dp[num] = Math.min(calculate(num - 1), Math.min(calculate(num / 3), calculate(num / 2))) + 1;
-            } else if (num % 3 == 0) {
-                dp[num] = Math.min(calculate(num - 1), calculate(num / 3)) + 1;
-            } else if (num % 2 == 0) {
-                dp[num] = Math.min(calculate(num - 1), calculate(num / 2)) + 1;
-            } else {
-                dp[num] = calculate(num - 1) + 1;
-            }
+    public static int calculate(int number){
+        if (number == 1) {
+            return dp[number];
         }
-        return dp[num];
+
+        if (dp[number] > 0) {
+            return dp[number];
+        }
+
+        if (number % 3 == 0) {
+            dp[number] = Math.min(calculate(number / 3), dp[number]) + 1;
+        } else if (number % 2 == 0) {
+            dp[number] = Math.min(calculate(number / 2), dp[number]) + 1;
+        }
+
+        dp[number] = calculate(number - 1);
+
+        return dp[number];
     }
 }
 
